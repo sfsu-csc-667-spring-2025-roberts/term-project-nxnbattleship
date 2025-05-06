@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {{!-- Loop and add all relevant styles and scripts--}}
+  {{#each styles}}
+    <link rel="stylesheet" href="/css/{{this}}">
+  {{/each}}
+  {{#each scripts}}
+    <script src="/scripts/{{this}}"></script>
+  {{/each}}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+</head>
+
+<body>
+  {{>header}}
+  <div id="left_spacer"></div> 
+  <div id="center_content">
+    {{{body}}}
+  </div>
+  <div id="right_spacer"></div>
+  {{>footer}}
+</body>
+
+</html>
