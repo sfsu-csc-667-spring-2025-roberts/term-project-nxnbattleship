@@ -2,10 +2,14 @@ import { Request, Response, NextFunction } from "express";
 
 const mware_time = (
   _req: Request,
-  _res: Response,
+  res: Response,
   next: NextFunction
 ) => {
-  console.log(`Request made at ${new Date().toISOString()}`);
+  const time_current = new Date().toISOString();
+  console.log(`Current Time: ${time_current}`);
+
+  res.locals.time_current = time_current; // Store the time in response locals
+
   next();
 };
 
