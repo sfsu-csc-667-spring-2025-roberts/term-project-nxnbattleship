@@ -14,7 +14,9 @@ import * as exp_hbs from "express-handlebars"
 import Handlebars = require("handlebars");
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+/* Dotenv */
 import dotenv from "dotenv";
+dotenv.config();
 
 /* Local Imports */
 import * as routes from "./routes"
@@ -36,15 +38,12 @@ app.use(express.urlencoded({ extended: false }));
 /* Enable Middleware Functions */
 app.use(mware_time);
 
-/* Dotenv */
-dotenv.config();
-
 /* Static Directory */
 app.use(express.static(path.join(process.cwd(), "public")));
 
 /* Routes */
 app.use("/", routes.root);
-app.use("testing", () => { });
+app.use("/testing", routes.test);
 
 /* Handlebars rendering for pages */
 const hbs: exp_hbs.ExpressHandlebars = exp_hbs.create({

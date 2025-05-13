@@ -1,3 +1,9 @@
+/**
+ * src/routes/root.ts
+ *
+ * Root Router
+ */
+
 import express, { Request, Response } from "express";
 
 const router = express.Router();
