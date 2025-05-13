@@ -14,6 +14,7 @@ import * as exp_hbs from "express-handlebars"
 import Handlebars = require("handlebars");
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
 /* Local Imports */
 import * as routes from "./routes"
@@ -34,6 +35,9 @@ app.use(express.urlencoded({ extended: false }));
 
 /* Enable Middleware Functions */
 app.use(mware_time);
+
+/* Dotenv */
+dotenv.config();
 
 /* Static Directory */
 app.use(express.static(path.join(process.cwd(), "public")));

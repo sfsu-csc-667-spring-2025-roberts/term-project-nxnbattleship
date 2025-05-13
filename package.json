@@ -2,7 +2,11 @@
   "main": "src/server/index.ts",
   "scripts": {
     "start": "NODE_ENV=production ts-node src/server/index.ts",
-    "start:dev": "nodemon --exec ts-node src/server/index.ts"
+    "start:dev": "nodemon --exec ts-node src/server/index.ts",
+    "prepare": "husky",
+    "db:create": "node-pg-migrate create -j ts --",
+    "db:migrate": "ts-node node_modules/node-pg-migrate/bin/node-pg-migrate.js up -j ts",
+    "db:rollback": "ts-node node_modules/node-pg-migrate/bin/node-pg-migrate.js down -j ts"
   },
   "dependencies": {
     "@types/express": "^5.0.1",
@@ -14,8 +18,11 @@
     "handlebars": "^4.7.8",
     "handlebars-helpers": "^0.10.0",
     "http-errors": "^2.0.0",
+    "husky": "^9.1.7",
     "morgan": "^1.10.0",
+    "node-pg-migrate": "^7.9.1",
     "nodemon": "^3.1.10",
+    "pg": "^8.16.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
