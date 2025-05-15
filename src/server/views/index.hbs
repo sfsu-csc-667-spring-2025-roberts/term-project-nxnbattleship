@@ -1,1 +1,31 @@
-<h2> {{desc}} </h2>
+<div class="lobby-wrapper">
+  <!-- top bar -->
+  <div class="lobby-header">
+    <h1>LOBBY</h1>
+    <a href="/login" class="login-link">Login/Register</a>
+  </div>
+
+  <!-- main content area -->
+  <div class="lobby-body">
+  <!-- game list -->
+  <section class="game-list">
+    <h2>Game List</h2>
+    <ul>
+      {{#each games}}
+        {{> game_entry}}
+      {{/each}}
+    </ul>
+  </section>
+
+    <!-- chat panel -->
+    <section class="chat-panel">
+      <h2>Lobby CHAT</h2>
+      <div class="chat-box" id="chat-box">
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chat-message" placeholder="Type a message..." />
+        <button id="send-btn">➤</button>
+      </div>
+    </section>
+  </div>
+</div>

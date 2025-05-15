@@ -43,6 +43,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 /* Routes */
 app.use("/", routes.root);
+app.use("/lobby", routes.lobby);
 app.use("/testing", routes.test);
 
 /* Handlebars rendering for pages */
