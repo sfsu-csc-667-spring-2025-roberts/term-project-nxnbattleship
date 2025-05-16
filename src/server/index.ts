@@ -41,6 +41,7 @@ app.use(mware_time);
 /* Static Directory */
 app.use(express.static(path.join(process.cwd(), "public")));
 
+
 /* Routes */
 app.use("/", routes.root);
 app.use("/lobby", routes.lobby);
