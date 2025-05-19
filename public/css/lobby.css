@@ -39,6 +39,7 @@
     max-width: 500px;
     background-color: #fafafa;
     border-radius: 5px;
+    width: 500px;
   }
   
   .chat-box {
@@ -70,16 +71,125 @@
     cursor: pointer;
   }
 
-  .lobby-body {
+  .lobby-panels {
     display: flex;
     gap: 2rem;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;
+    margin-top: 2rem;
+    align-items: stretch;
   }
   
-  .game-list, .chat-panel {
-    flex: 1 1 40%;
-    max-width: 500px;
+  .panel {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 1.5rem;
+    border-radius: 6px;
+    width: 450px;
+    min-height: 300px;
+    box-sizing: border-box;
+  }
+  
+  .panel h2 {
+    margin-top: 0;
+  }
+
+  .game-list-panel {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .game-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .game-list li {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0.8rem;
+    margin-bottom: 0.6rem;
+    border-radius: 4px;
+  }
+  
+  .create-game-container {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .create-game-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #eee;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  ul.game-list {
+    max-height: 270px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+
+  .chat-box::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat-box::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 4px;
+  }
+  
+  ul.game-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ul.game-list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .modal.hidden {
+    display: none;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border: 3px solid black;
+    text-align: center;
+    width: 300px;
+    border-radius: 6px;
+  }
+  
+  .modal-content input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    border: 2px solid black;
+  }
+  
+  .modal-content button {
+    padding: 0.5rem 1.5rem;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
   }
   
