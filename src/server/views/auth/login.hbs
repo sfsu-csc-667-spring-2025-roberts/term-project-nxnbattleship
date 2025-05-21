@@ -1,0 +1,33 @@
+{{! -- Login form --}}
+
+<form action="/auth/login" method="post">
+  <h1>Login</h1>
+
+  {{! -- Display error if exists --}}
+  {{#if error}}
+    <p style="color: red">{{error}}</p>
+  {{/if}}
+
+  <div>
+    <label for="username">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      required
+      placeholder="Email address"
+      {{! -- If email is available, autofill --}}
+      {{#if email}}
+        value="{{email}}"
+      {{/if}}
+    />
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required />
+  </div>
+
+  <button type="submit">Register</button>
+  <a href="/auth/register">Don't have an account? Register</a>
+</form>

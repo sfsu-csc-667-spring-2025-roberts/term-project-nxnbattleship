@@ -46,6 +46,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use("/", routes.root);
 app.use("/lobby", routes.lobby);
 app.use("/testing", routes.test);
+app.use("/auth", routes.auth);
 
 /* Handlebars rendering for pages */
 const hbs: exp_hbs.ExpressHandlebars = exp_hbs.create({

@@ -22,10 +22,13 @@
   "dependencies": {
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.10",
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
+    "express-session": "^1.18.1",
     "handlebars": "^4.7.8",
     "handlebars-helpers": "^0.10.0",
     "http-errors": "^2.0.0",
@@ -41,6 +44,8 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.8",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.5",
