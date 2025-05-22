@@ -9,20 +9,26 @@
 /* Dependency Imports */
 import express, { Request, Response, NextFunction } from "express"
 import http_errors from "http-errors"
-import path from "path"
+import * as path from "path"
+import * as http from "http"
 import * as exp_hbs from "express-handlebars"
 import Handlebars = require("handlebars");
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io"
 /* Dotenv */
 import dotenv from "dotenv";
 dotenv.config();
 
-/* Local Imports */
-import * as routes from "./routes"
-import { mware_time } from "./middleware/time";
 
-const app = express();
+/* Local Imports */
+import * as config      from "./config";
+import * as routes      from "./routes";
+import * as middleware  from "./middleware";
+
+const app     = express();
+const server  = http.createServer(app);
+const io      = new Server(server);
 const PORT = process.env.PORT || 3000;
 
 
@@ -36,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* Enable Middleware Functions */
-app.use(mware_time);
+//app.use(mware_time);
 
 /* Static Directory */
 app.use(express.static(path.join(process.cwd(), "public")));
@@ -47,6 +53,10 @@ app.use("/", routes.root);
 app.use("/lobby", routes.lobby);
 app.use("/testing", routes.test);
 app.use("/auth", routes.auth);
+
+config.liveReload(app);
+config.session(app);
+config.sockets(io, app);
 
 /* Handlebars rendering for pages */
 const hbs: exp_hbs.ExpressHandlebars = exp_hbs.create({
@@ -63,10 +73,10 @@ var helpers = require('handlebars-helpers')();
 Handlebars.registerHelper(helpers);
 
 
-app.use((_req: Request, _response: Response, next: NextFunction) => {
+app.use((_req: Request, _res: Response, next: NextFunction) => {
   next(http_errors(404));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

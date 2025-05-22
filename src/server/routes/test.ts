@@ -5,6 +5,7 @@
  */
 
 import express, { Request, Response } from "express";
+import type {Server} from "socket.io";
 
 import db from "../db/connection"
 
@@ -53,6 +54,18 @@ router.get("/insert_Promise", (request: Request, response: Response) => {
       console.error(error);
       response.status(500).json({ error: "Internal Server Error" });
     });
+});
+
+router.get("/socket", (req: Request, res: Response) => {
+  const io: Server = req.app.get("io");
+
+  // @ts-ignore
+  io.emit("test", { user: req.session.user });
+
+  // @ts-ignore
+  io.to(req.session.user.id).emit("test", { secret: "hello" });
+
+  res.json({ message: "Socket event emitted" });
 });
 
 export default router;

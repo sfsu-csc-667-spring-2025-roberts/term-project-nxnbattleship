@@ -1,1 +1,5 @@
-console.log("Hello from the client (chat sub-directory)!");
+import { socket } from "../socket";
+
+socket.on("test", (data: any) => {
+  console.log("test", { data });
+});
