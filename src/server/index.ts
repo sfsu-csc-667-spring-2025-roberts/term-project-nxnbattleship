@@ -61,7 +61,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use("/", routes.root);
 app.use("/auth", routes.auth);
 
-app.use("/lobby", middleware.authMiddleware, routes.lobby);
+app.use("/lobby", routes.lobby);
 app.use("/chat",  middleware.authMiddleware, routes.chat);
 
 app.use("/testing", routes.test);

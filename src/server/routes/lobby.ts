@@ -6,7 +6,7 @@ let games: { id: string; name: string }[] = [];
 router.get("/", (_req: Request, res: Response) => {
   res.render("index", {
     title: "LOBBY ROOM",
-    styles: ["lobby.css"],
+    styles: ["default.css", "lobby.css"],
     scripts: ["chat.js"],
     games: games
   });
