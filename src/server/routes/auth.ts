@@ -10,9 +10,9 @@ router.get("/register", async (_req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   try {
-    const user = await User.register(email, password);
+    const user = await User.register(username, email, password);
   
     // TODO: We need to find a way to extend the Session Object with DataSession
     // @ts-ignore

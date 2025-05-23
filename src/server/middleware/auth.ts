@@ -8,7 +8,7 @@ const authMiddleware = (
   // @ts-ignore
   if (req.session.user) {
     // @ts-ignore
-    res.locals.user = request.session.user;
+    res.locals.user = req.session.user;
 
     next();
   } else {

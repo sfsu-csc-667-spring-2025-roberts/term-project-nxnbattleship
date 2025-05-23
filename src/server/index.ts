@@ -8,6 +8,7 @@
 
 /* Dependency Imports */
 import express, { Request, Response, NextFunction } from "express"
+import session from "express-session";
 import http_errors from "http-errors"
 import * as path from "path"
 import * as http from "http"
@@ -44,15 +45,27 @@ app.use(express.urlencoded({ extended: false }));
 /* Enable Middleware Functions */
 //app.use(mware_time);
 
+/* Enable Sessions */
+
+app.use(session({
+  secret: "mysecret",
+  resave: false,
+  saveUninitialized: false,
+}));
+
 /* Static Directory */
 app.use(express.static(path.join(process.cwd(), "public")));
 
 
 /* Routes */
 app.use("/", routes.root);
-app.use("/lobby", routes.lobby);
-app.use("/testing", routes.test);
 app.use("/auth", routes.auth);
+
+app.use("/lobby", middleware.authMiddleware, routes.lobby);
+app.use("/chat",  middleware.authMiddleware, routes.chat);
+
+app.use("/testing", routes.test);
+
 
 config.liveReload(app);
 config.session(app);
