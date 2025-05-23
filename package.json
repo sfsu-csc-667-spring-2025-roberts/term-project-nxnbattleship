@@ -1,7 +1,7 @@
 {
   "main": "src/server/index.ts",
   "scripts": {
-    "start": "NODE_ENV=production ts-node src/server/index.ts",
+    "start": "NODE_ENV=production ts-node -P tsconfig.json src/server/index.ts",
     "start:dev": "nodemon --exec ts-node src/server/index.ts",
     "backend:dev": "nodemon --exec ts-node src/server/index.ts --ext ts,ejs,css",
     "frontend:dev": "parcel watch --dist-dir ./public/js",
@@ -54,7 +54,6 @@
     "@types/connect-livereload": "^0.6.3",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.8",
-    "@types/express-session": "^1.18.1",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.5",
     "@types/socket.io": "^3.0.1",

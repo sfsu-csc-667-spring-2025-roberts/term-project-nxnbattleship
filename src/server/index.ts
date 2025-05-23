@@ -9,6 +9,13 @@
 /* Dependency Imports */
 import express, { Request, Response, NextFunction } from "express"
 import session from "express-session";
+import "../types/session-augmentation";
+import connectPgSimple from "connect-pg-simple";
+import pgPromise from "pg-promise";
+/* Importing pg JUST for sessions, NOTHING ELSE */
+import pg from 'pg';
+const { Pool } = pg;
+/* */
 import http_errors from "http-errors"
 import * as path from "path"
 import * as http from "http"
@@ -46,11 +53,29 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(mware_time);
 
 /* Enable Sessions */
+const pgSession = connectPgSimple(session);
 
+const sessionPool = new Pool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: process.env.DB_SSL === "true",
+});
 app.use(session({
-  secret: "mysecret",
+  store: new pgSession({
+    pool: sessionPool,
+    tableName: "user_sessions"
+  }),
+  secret: process.env.SESSION_SECRET || "dev-secret",
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+  }
 }));
 
 /* Static Directory */
@@ -61,8 +86,8 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use("/", routes.root);
 app.use("/auth", routes.auth);
 
-app.use("/lobby", middleware.authMiddleware, routes.lobby);
-app.use("/chat",  middleware.authMiddleware, routes.chat);
+app.use("/lobby", middleware.auth, routes.lobby);
+app.use("/chat",  middleware.auth, routes.chat);
 
 app.use("/testing", routes.test);
 

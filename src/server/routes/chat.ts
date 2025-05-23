@@ -1,12 +1,15 @@
 import express from "express";
 import { Request, Response } from "express";
-import { ChatMessage } from "global";
+// TODO:
+// The only way that I got sessions to play nicely was by breaking this,
+// The type wasn't being loaded as a module properly so it is what it is
+import { ChatMessage } from "../../../types/global";
 
 const router = express.Router();
 
-router.post("/:id", (req: Request, res: Response) => {
+router.post("/:room_id", (req: Request, res: Response) => {
   const { message } = req.body;
-  const id = req.params.id;
+  const id = req.params.room_id;
   const io = req.app.get("io");
 
   const broadcastMessage: ChatMessage = {

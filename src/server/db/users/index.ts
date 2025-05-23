@@ -24,6 +24,7 @@ const login = async (email: string, password: string) => {
 
   const {
     id,
+    username,
     gravatar,
     password: encryptedPassword,
   } = await db.one(sql, [email]);
@@ -34,7 +35,8 @@ const login = async (email: string, password: string) => {
     throw new Error("Invalid credentials, try again.");
   }
 
-  return { id, gravatar, email };
+  //TODO: Make an ACTUAL User type to avoid screwing up the order of data again
+  return { id, username, email, gravatar};
 };
 
 export default { register, login };

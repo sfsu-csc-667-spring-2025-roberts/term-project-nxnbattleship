@@ -5,13 +5,14 @@ const authMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  // @ts-ignore
+  console.log(`Middleware: Auth running...`)
+  console.log(req.session);
   if (req.session.user) {
-    // @ts-ignore
     res.locals.user = req.session.user;
 
     next();
   } else {
+    console.log("Middleware: Auth Failed, User must be logged in");
     res.redirect("/auth/login");
   }
 };

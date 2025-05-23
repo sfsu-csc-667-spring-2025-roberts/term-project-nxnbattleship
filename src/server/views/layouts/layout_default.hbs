@@ -25,6 +25,18 @@
     </div>
   </header>
 
+  {{#if title}}
+    <h1>{{title}}</h1>
+  {{else}}
+    <h1>Please pass in a "title" to the route rendering</h1>
+  {{/if}}
+
+  {{#if error}}
+    <h2>{{error}}</h2>
+  {{else}}
+    <h2>NO ERROR!</h2>
+  {{/if}}
+
   <main id="center_content">
     {{{body}}}
   </main>

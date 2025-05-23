@@ -1,45 +1,59 @@
 import express from "express";
 import { Request, Response } from "express";
 
-import { User } from "../db";
+import * as DB from "../db";
+import User from "../../types/user"
 
 const router = express.Router();
 
 router.get("/register", async (_req: Request, res: Response) => {
-  res.render("auth/register");
+  res.render("auth/register", {
+    title: "Register Page",
+    styles: ["default.css"]
+  });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   try {
-    const user = await User.register(username, email, password);
-  
-    // TODO: We need to find a way to extend the Session Object with DataSession
-    // @ts-ignore
+    const user = await DB.User.register(username, email, password);
+
     req.session.user = user;
     res.redirect("/lobby");
 
   } catch (error) {
     console.error("Error registering user:", error);
-    res.render("auth/register", { error: "Invalid credentials.", email });
+    res.render("auth/register", { 
+      title: "Register Page",
+      error: "Invalid credentials.",
+      email
+    });
   }
 });
 
 router.get("/login", async (_req: Request, res: Response) => {
-  res.render("auth/login");
+  res.render("auth/login", {
+    title: "Login Page"
+  });
 });
 
 router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
-    const user = await User.login(email, password);
+    const temp: User = await DB.User.login(email, password);
+    console.log(temp);
 
-    //@ts-ignore
-    req.session.user = user;
+    req.session.user = temp; 
+    console.log(req.session.user);
+
     res.redirect("/lobby");
   } catch (error) {
     console.error("Error logging in user:", error);
-    res.render("auth/login", { error: "Invalid credentials.", email });
+    res.render("auth/login", {
+      title: "Login Page",
+      error: "Invalid credentials.",
+      email,
+    });
   }
 });
 

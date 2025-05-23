@@ -1,6 +1,7 @@
 import type { ChatMessage } from "global";
 import { socket } from "../socket";
 
+const roomId = document.querySelector<HTMLInputElement>("input#room-id")?.value;
 const parent        = document.querySelector("section#chat div");
 const messageInput  = document.querySelector<HTMLInputElement>(
   "section#chat form input[name=message]",
@@ -14,7 +15,12 @@ document
     const message = messageInput?.value;
     messageInput!.value = "";
 
-    fetch("/chat/0", {
+    if (message?.trim().length === 0){
+      //If the message is nothing, don't do anything
+      return;
+    }
+
+    fetch("/chat/${roomId}", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +31,7 @@ document
   });
 
 socket.on(
-  "chat-message:0",
+  "chat-message:${roomId}",
   ({ message, sender, gravatar, timestamp }: ChatMessage) => {
     const container = document
       .querySelector<HTMLTemplateElement>("template#chat-message-template")
