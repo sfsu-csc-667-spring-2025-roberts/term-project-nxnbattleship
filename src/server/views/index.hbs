@@ -7,45 +7,60 @@
 
   <!-- main content area -->
   <div class="lobby-panels">
-  <!-- Game List on the left -->
-  <section class="panel game-list-panel">
-    <h2>Game List</h2>
-    <ul class="game-list">
-      {{#each games}}
-        <li class="game-item">
-          <span>{{this.name}}</span>
-          <button>Join</button>
-        </li>
-      {{/each}}
-    </ul>
-  </section>
+    <!-- Game List on the left -->
+    <section class="panel game-list-panel">
+      <h2>Game List</h2>
+      <ul class="game-list">
+        {{#each games}}
+          <li class="game-item">
+            <span>{{this.name}}</span>
+            <button>Join</button>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
 
-  <!-- Chat on the right -->
-  <section class="panel chat-panel">
-    <h2>Lobby CHAT</h2>
-    <div class="chat-box" id="chat-box"></div>
-    <div class="chat-input">
-      <input type="text" id="chat-message" placeholder="Type a message..." />
-      <button id="send-btn">➤</button>
-    </div>
-  </section>
-</div>
-
-<!-- Create Game Button centered below -->
-<div class="create-game-container">
-  <button id="open-create-modal" class="create-game-btn" type="button">Create Game</button>
-</div>
-
-<!-- Modal Background -->
-<div id="create-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span id="close-create-modal" class="close">&times;</span>
-    <h2>Create Game</h2>
-    <form method="POST" action="/lobby/create">
-      <input type="text" name="name" placeholder="Enter game name" required />
-      <button type="submit">CREATE</button>
-    </form>
+    <!-- chat on the right -->
+    <section class="panel chat-panel">
+      <h2>Lobby CHAT</h2>
+      
+      <!-- this is the chat message list -->
+      <ul id="chat-messages" class="chat-box" style="height: 250px; overflow-y: auto;"></ul>
+      
+      <!-- this is the input form -->
+      <form id="chat-form" class="chat-input">
+        <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" required />
+        <button type="submit">➤</button>
+      </form>
+    </section>
   </div>
-</div>
 
-<script src="/js/chat.js"></script>
+  <!-- create Game Button centered below -->
+  <div class="create-game-container">
+    <button id="open-create-modal" class="create-game-btn" type="button">Create Game</button>
+  </div>
+
+  <!-- modal background -->
+  <div id="create-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="close-create-modal" class="close">&times;</span>
+      <h2>Create Game</h2>
+      <form method="POST" action="/lobby/create">
+        <input type="text" name="name" placeholder="Enter game name" required />
+        <button type="submit">CREATE</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- chat message template for chat.ts -->
+  <template id="chat-message-template">
+    <div class="chat-message">
+      <img src="" alt="gravatar" width="24" height="24" />
+      <span class="chat-text"></span>
+      <span class="chat-time"></span>
+    </div>
+  </template>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/chat.js"></script>
+</div>

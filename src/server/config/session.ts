@@ -10,6 +10,8 @@ const configureSession = (app: Express) => {
     createTableIfMissing: true,
   });
 
+  const secret = process.env.SESSION_SECRET || "fallback_secret";
+  
   const sessionMiddleware = session({
     store,
     secret: process.env.SESSION_SECRET!,
