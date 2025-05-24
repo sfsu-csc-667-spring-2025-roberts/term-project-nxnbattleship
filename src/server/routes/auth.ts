@@ -2,7 +2,6 @@ import express from "express";
 import { Request, Response } from "express";
 
 import * as DB from "../db";
-import User from "../../types/user"
 
 const router = express.Router();
 
@@ -18,6 +17,7 @@ router.post("/register", async (req: Request, res: Response) => {
   try {
     const user = await DB.User.register(username, email, password);
 
+    // @ts-ignore
     req.session.user = user;
     res.redirect("/lobby");
 
@@ -40,12 +40,10 @@ router.get("/login", async (_req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
-    const temp: User = await DB.User.login(email, password);
-    console.log(temp);
+    const user = await DB.User.login(email, password);
 
-    req.session.user = temp; 
-    console.log(req.session.user);
-
+    // @ts-ignore
+    req.session.user = user;
     res.redirect("/lobby");
   } catch (error) {
     console.error("Error logging in user:", error);
@@ -64,6 +62,8 @@ router.get("/logout", async (req: Request, res: Response) => {
   req.session.destroy(() => {
     // TODO: Define this no-op... eventually
   });
+
+  res.redirect("/");
 });
 
 export default router;

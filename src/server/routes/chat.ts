@@ -1,30 +1,36 @@
 import express from "express";
 import { Request, Response } from "express";
-// TODO:
-// The only way that I got sessions to play nicely was by breaking this,
-// The type wasn't being loaded as a module properly so it is what it is
-import { ChatMessage } from "../../../types/global";
+import { ChatMessage } from "global";
 
 const router = express.Router();
 
 router.post("/:room_id", (req: Request, res: Response) => {
   const { message } = req.body;
-  const id = req.params.room_id;
+  const { room_id } = req.params;
+  // @ts-ignore
+  const { id, email, gravatar } = request.session.user;
   const io = req.app.get("io");
 
-  const broadcastMessage: ChatMessage = {
+  /* Error Checking */
+  if (!io) {
+    res.status(500).send("Socket.io not initialized");
+    return;
+  }
+
+  if (!message) {
+    res.status(400).send("Message is required");
+    return;
+  }
+
+  io.emit(`chat:message:${room_id}`, {
     message,
-    // TODO: Extend Session Data types
-    // @ts-ignore
-    sender: req.session.user.email,
-    // @ts-ignore
-    gravatar: req.session.user.gravatar,
-    timestamp: Date.now(),
-  };
-
-  console.log({ broadcastMessage });
-
-  io.emit(`chat-message:${id}`, broadcastMessage);
+    sender: {
+      id,
+      email,
+      gravatar,
+    },
+    timestamp: new Date(),
+  });
 
   res.status(200).send();
 });

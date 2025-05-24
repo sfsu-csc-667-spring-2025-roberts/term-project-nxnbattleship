@@ -6,8 +6,10 @@ const authMiddleware = (
   next: NextFunction,
 ) => {
   console.log(`Middleware: Auth running...`)
-  console.log(req.session);
+  
+  // @ts-ignore
   if (req.session.user) {
+    // @ts-ignore
     res.locals.user = req.session.user;
 
     next();

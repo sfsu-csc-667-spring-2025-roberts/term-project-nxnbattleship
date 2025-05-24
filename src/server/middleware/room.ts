@@ -7,9 +7,9 @@ const roomMiddleware = (
   ) => {
     const { room_id } = req.params;
     if (room_id == undefined && req.url.includes("lobby")) {
-      res.locals.roomId = 0;
+      res.locals.room_id = 0;
     } else if (room_id !== undefined) {
-      res.locals.roomId = room_id;
+      res.locals.room_id = room_id;
     }
 
   next();

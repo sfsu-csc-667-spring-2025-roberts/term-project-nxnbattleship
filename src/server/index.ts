@@ -9,7 +9,6 @@
 /* Dependency Imports */
 import express, { Request, Response, NextFunction } from "express"
 import session from "express-session";
-import "../types/session-augmentation";
 import connectPgSimple from "connect-pg-simple";
 import pgPromise from "pg-promise";
 /* Importing pg JUST for sessions, NOTHING ELSE */
@@ -39,6 +38,10 @@ const server  = http.createServer(app);
 const io      = new Server(server);
 const PORT = process.env.PORT || 3000;
 
+app.use(middleware.room)
+
+config.liveReload(app);
+config.sockets(io, app, config.session(app));
 
 app.use(morgan("dev"));
 app.use(cookieParser());
@@ -92,9 +95,6 @@ app.use("/chat",  middleware.auth, routes.chat);
 app.use("/testing", routes.test);
 
 
-config.liveReload(app);
-config.session(app);
-config.sockets(io, app);
 
 /* Handlebars rendering for pages */
 const hbs: exp_hbs.ExpressHandlebars = exp_hbs.create({
